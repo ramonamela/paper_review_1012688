@@ -1,0 +1,24 @@
++ mkdir -p /usr/local/var/singularity/mnt/container/opt
+/bin/cp: cannot stat '/opt/mpiBWA': No such file or directory
+ERROR: Failed copying file(s) into container
++ apt-get update
++ apt-get install -y git automake openmpi-common libopenmpi-dev make zlib1g-dev
+debconf: delaying package configuration, since apt-utils is not installed
++ git clone https://github.com/bioinfo-pf-curie/mpiBWA.git
+Cloning into 'mpiBWA'...
++ cd mpiBWA
++ aclocal
++ autoconf
++ automake --add-missing
+configure.ac:10: installing './ar-lib'
+configure.ac:8: installing './compile'
+configure.ac:5: installing './install-sh'
+configure.ac:5: installing './missing'
+src/Makefile.am: installing './depcomp'
++ ./configure CC=/usr/bin/mpicc --prefix=/opt/mpiBWA
++ make
+ar: `u' modifier ignored since `D' is the default (see `U')
++ make install
++ Bootstrap: docker
+/bin/sh: 12: Bootstrap:: not found
+ABORT: Aborting with RETVAL=255
