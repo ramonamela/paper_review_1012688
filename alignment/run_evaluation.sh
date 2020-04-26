@@ -21,7 +21,7 @@ pushd bioinfo-pf-curie-mpiBWA-dbdcfe6/containers/
 singularity --version > ${alignment_home}/singularity_env_${version}.txt
 echo "***" >> ${alignment_home}/singularity_env_${version}.txt
 env | grep -v SL_USSER | grep -v SL_PASS | grep -v PLACE | grep -v SSH >> ${alignment_home}/singularity_env_${version}.txt
-sudo singularity build mpiWA-${version}.img mpiBWA-${version}.def > ${alignment_home}/singularity_${version}.out 2> ${alignment_home}/singularity_${version}.err
+sudo singularity build mpiBWA-${version}.img mpiBWA-${version}.def > ${alignment_home}/singularity_${version}.out 2> ${alignment_home}/singularity_${version}.err
 popd
 
 ### Bare metal compilation
@@ -49,4 +49,5 @@ mpiBWAIdx ./hg19.small.fa
 popd
 ##  mpiBWA alignment
 mpirun -n 2 mpiBWA mem -t 4 -o ./HCC1187C.sam ./binary_map/hg19.small.fa ${alignment_home}/mpiBWA/examples/data/HCC1187C_R1_10K.fastq ${alignment_home}/mpiBWA/examples/data/HCC1187C_R2_10K.fastq
+mpirun -n 2 mpiBWAByChr mem -t 4 -o ./HCC1187C.sam ./binary_map/hg19.small.fa ${alignment_home}/mpiBWA/examples/data/HCC1187C_R1_10K.fastq ${alignment_home}/mpiBWA/examples/data/HCC1187C_R2_10K.fastq
 popd
