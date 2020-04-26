@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sam_dest=${1:-"$(pwd)/bare_test/HCC1187C.sam"}
 alignment_home=$(pwd)
 
 ### Singularity generation
@@ -48,6 +49,6 @@ pushd binary_map
 mpiBWAIdx ./hg19.small.fa
 popd
 ##  mpiBWA alignment
-mpirun -n 2 mpiBWA mem -t 4 -o ./HCC1187C.sam ./binary_map/hg19.small.fa ${alignment_home}/mpiBWA/examples/data/HCC1187C_R1_10K.fastq ${alignment_home}/mpiBWA/examples/data/HCC1187C_R2_10K.fastq
+mpirun -n 2 mpiBWA mem -t 4 -o "${sam_dest}" ./binary_map/hg19.small.fa ${alignment_home}/mpiBWA/examples/data/HCC1187C_R1_10K.fastq ${alignment_home}/mpiBWA/examples/data/HCC1187C_R2_10K.fastq
 mpirun -n 2 mpiBWAByChr mem -t 4 -o ./HCC1187C.sam ./binary_map/hg19.small.fa ${alignment_home}/mpiBWA/examples/data/HCC1187C_R1_10K.fastq ${alignment_home}/mpiBWA/examples/data/HCC1187C_R2_10K.fastq
 popd
