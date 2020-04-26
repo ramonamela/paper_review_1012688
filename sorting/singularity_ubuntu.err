@@ -1,0 +1,56 @@
++ mkdir -p /usr/local/var/singularity/mnt/container/opt
+/bin/cp: cannot stat '/opt/mpiSORT': No such file or directory
+ERROR: Failed copying file(s) into container
++ apt-get update
++ apt-get install -y git automake openmpi-common libopenmpi-dev make zlib1g-dev
+debconf: delaying package configuration, since apt-utils is not installed
++ git clone https://github.com/bioinfo-pf-curie/mpiSORT.git
+Cloning into 'mpiSORT'...
++ cd mpiSORT
++ aclocal
++ autoconf
++ automake --add-missing
+configure.ac:8: installing './compile'
+configure.ac:5: installing './install-sh'
+configure.ac:5: installing './missing'
+src/Makefile.am: installing './depcomp'
++ ./configure CC=/usr/bin/mpicc --prefix=/opt/mpiSORT
++ make
+mpiSort.c: In function 'main':
+mpiSort.c:430:2: warning: implicit declaration of function 'malloc_trim'; did you mean 'malloc'? [-Wimplicit-function-declaration]
+  malloc_trim(0);
+  ^~~~~~~~~~~
+  malloc
+mpiSort.c:268:3: warning: ignoring return value of 'asprintf', declared with attribute warn_unused_result [-Wunused-result]
+   asprintf(&chrNames[nbchr++],"%s_%s", chrNames[nbchr - 1], DISCORDANT);
+   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mpiSort.c:269:3: warning: ignoring return value of 'asprintf', declared with attribute warn_unused_result [-Wunused-result]
+   asprintf(&chrNames[nbchr++],"%s_%s", chrNames[nbchr - 1], UNMAPPED);
+   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mpiSort.c:283:2: warning: ignoring return value of 'asprintf', declared with attribute warn_unused_result [-Wunused-result]
+  asprintf(&header, "@HD\tVN:1.0\tSO:%s\n%s", sort_name, hbuf);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+parallelBitonicSort.c: In function 'Local_sort':
+parallelBitonicSort.c:213:2: warning: implicit declaration of function 'malloc_trim'; did you mean 'malloc'? [-Wimplicit-function-declaration]
+  malloc_trim(0);
+  ^~~~~~~~~~~
+  malloc
+parallelBitonicSort2.c: In function 'Local_sort2':
+parallelBitonicSort2.c:228:2: warning: implicit declaration of function 'malloc_trim'; did you mean 'malloc'? [-Wimplicit-function-declaration]
+  malloc_trim(0);
+  ^~~~~~~~~~~
+  malloc
+parallelBitonicSort3.c: In function 'Local_sort3':
+parallelBitonicSort3.c:216:2: warning: implicit declaration of function 'malloc_trim'; did you mean 'malloc'? [-Wimplicit-function-declaration]
+  malloc_trim(0);
+  ^~~~~~~~~~~
+  malloc
+In file included from write.c:38:0:
+bgzf.c: In function 'bgzf_check_EOF':
+bgzf.c:681:2: warning: ignoring return value of 'fread', declared with attribute warn_unused_result [-Wunused-result]
+  fread(buf, 1, 28, fp->file);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
++ make install
++ Bootstrap: docker
+/bin/sh: 12: Bootstrap:: not found
+ABORT: Aborting with RETVAL=255
