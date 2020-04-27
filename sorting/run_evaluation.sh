@@ -1,5 +1,7 @@
 #!/bin/bash
 
+input_sam=${1:-"$(pwd)/mpiSORT/examples/data/HCC1187C_70K_READS.sam"}
+output_dir=${2:-"$(pwd)/mpiSORTExapmle"}
 sort_home=$(pwd)
 
 ### Singularity generation 
@@ -28,3 +30,19 @@ popd
 rm -rf mpiSORT
 env | grep -v SL_USSER | grep -v SL_PASS | grep -v PLACE | grep -v SSH > ${sort_home}/mpi_compilation.txt
 git clone https://github.com/bioinfo-pf-curie/mpiSORT.git
+pushd mpiSORT
+aclocal
+autoconf
+automake --add-missing
+./configure --prefix=${HOME}/local/mpiSORT
+make
+make install
+export PATH=${PATH}:${HOME}/local/mpiSORT/bin
+popd
+
+### Bare metal execution
+mkdir -p bare_test
+pushd bare_test
+##  mpiSORT sorting
+mpirun -n 4 mpiSORT ${input_sam} ${output_dir}
+popd
